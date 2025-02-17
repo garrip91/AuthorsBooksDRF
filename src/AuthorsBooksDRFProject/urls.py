@@ -23,9 +23,9 @@ from AuthorsBooksDRFApp.views import AuthorViewSet, GenreViewSet, BookViewSet, A
 
 # Роутеры для перехода на соответствующие страницы (DRF)
 router = routers.DefaultRouter()
-router.register(r"authors", AuthorViewSet)
-router.register(r"genres", GenreViewSet)
-router.register(r"books", BookViewSet)
+router.register(r"authors", AuthorViewSet, basename="authors")
+router.register(r"genres", GenreViewSet, basename="genres")
+router.register(r"books", BookViewSet, basename="books")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
