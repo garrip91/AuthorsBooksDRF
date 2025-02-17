@@ -16,9 +16,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
 
+from AuthorsBooksDRFApp.views import AuthorViewSet, GenreViewSet, BookViewSet, AllDataView
+
+
+# Роутеры для перехода на соответствующие страницы (DRF)
+router = routers.DefaultRouter()
+router.register(r"authors", AuthorViewSet)
+router.register(r"genres", GenreViewSet)
+router.register(r"books", BookViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("AuthorsBooksDRFApp.urls", namespace="AuthorsBooksDRFApp")),
+    path("", include(router.urls)),
+    path("api-auth/", include("rest_framework.urls", namespace="rest_framework")), # ЭТО НЕ ПОЛУЧИЛОСЬ РЕАЛИЗОВАТЬ ПОКА ЧТО
+    path("all-data/", AllDataView.as_view(), name="all-data"), # И ЭТО ТОЖЕ
 ]
