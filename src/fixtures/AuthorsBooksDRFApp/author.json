@@ -1,0 +1,52 @@
+[
+    {
+        "model": "AuthorsBooksDRFApp.author",
+        "pk": 1,
+        "fields": {
+            "firstname": "Имя #1",
+            "lastname": "Фамилия #1",
+            "birthdate": "1903-01-01",
+            "deathdate": "1983-01-01"
+        }
+    },
+    {
+        "model": "AuthorsBooksDRFApp.author",
+        "pk": 2,
+        "fields": {
+            "firstname": "Имя #2",
+            "lastname": "Фамилия #2",
+            "birthdate": "2003-02-02",
+            "deathdate": null
+        }
+    },
+    {
+        "model": "AuthorsBooksDRFApp.author",
+        "pk": 3,
+        "fields": {
+            "firstname": "Имя #3",
+            "lastname": "Фамилия #3",
+            "birthdate": "1904-03-03",
+            "deathdate": "1984-03-03"
+        }
+    },
+    {
+        "model": "AuthorsBooksDRFApp.author",
+        "pk": 4,
+        "fields": {
+            "firstname": "Имя #4",
+            "lastname": "Фамилия #4",
+            "birthdate": "2004-04-04",
+            "deathdate": null
+        }
+    },
+    {
+        "model": "AuthorsBooksDRFApp.author",
+        "pk": 5,
+        "fields": {
+            "firstname": "Имя #5",
+            "lastname": "Фамилия #5",
+            "birthdate": "1905-05-05",
+            "deathdate": "1985-05-05"
+        }
+    }
+]

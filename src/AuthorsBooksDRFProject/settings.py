@@ -84,10 +84,20 @@ WSGI_APPLICATION = 'AuthorsBooksDRFProject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
+""" DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    }
+} """
+DATABASES = {
+    "default": {
+        "ENGINE": secrets.DATABASES["default"]["ENGINE"],
+        "NAME": secrets.DATABASES["default"]["NAME"],
+        "USER": secrets.DATABASES["default"]["USER"],
+        "PASSWORD": secrets.DATABASES["default"]["PASSWORD"],
+        "HOST": secrets.DATABASES["default"]["HOST"],
+        "PORT": secrets.DATABASES["default"]["PORT"],
     }
 }
 

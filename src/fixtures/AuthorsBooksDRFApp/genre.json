@@ -1,0 +1,37 @@
+[
+    {
+        "model": "AuthorsBooksDRFApp.genre",
+        "pk": 1,
+        "fields": {
+            "name": "Жанр #1"
+        }
+    },
+    {
+        "model": "AuthorsBooksDRFApp.genre",
+        "pk": 2,
+        "fields": {
+            "name": "Жанр #2"
+        }
+    },
+    {
+        "model": "AuthorsBooksDRFApp.genre",
+        "pk": 3,
+        "fields": {
+            "name": "Жанр #3"
+        }
+    },
+    {
+        "model": "AuthorsBooksDRFApp.genre",
+        "pk": 4,
+        "fields": {
+            "name": "Жанр #4"
+        }
+    },
+    {
+        "model": "AuthorsBooksDRFApp.genre",
+        "pk": 5,
+        "fields": {
+            "name": "Жанр #5"
+        }
+    }
+]
