@@ -2,7 +2,7 @@ GitHubToken.txt
 secrets.py
 
 venv/
-migrations/
+.vscode/
 *.sqlite3
 __pycache__/
 __pycache__
