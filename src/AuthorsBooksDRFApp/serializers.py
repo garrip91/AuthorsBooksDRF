@@ -1,5 +1,5 @@
-from .models import Author, Genre, Book
 from rest_framework import serializers
+from .models import Author, Genre, Book
 
 
 #class AuthorSerializer(serializers.HyperlinkedModelSerializer):
@@ -14,7 +14,7 @@ class AuthorSerializer(serializers.ModelSerializer):
 #class GenreSerializer(serializers.HyperlinkedModelSerializer):
 class GenreSerializer(serializers.ModelSerializer):
     """Класс-сериализатор, используемый для преобразования объектов модели Genre в формат json"""
-    
+
     class Meta:
         model = Genre
         fields = ["name"]

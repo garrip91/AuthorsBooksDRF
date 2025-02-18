@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+# from django.views.generic import TemplateView
 from rest_framework import permissions, viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -11,7 +11,7 @@ from .serializers import AuthorSerializer, GenreSerializer, BookSerializer
 # class IndexView(TemplateView):
 #     #template_name = "AuthorsBooksDRFApp/index.html"
 #     template_name = "index.html"
-#    
+#
 #     def get_context_data(self, **kwargs):
 #         context = super().get_context_data(**kwargs)
 #         #context["title"] = "Метатег <title>"
@@ -21,11 +21,11 @@ from .serializers import AuthorSerializer, GenreSerializer, BookSerializer
 
 def index(request):
     """Функция представления для основной страницы с авторами и их книгами"""
-    
+
     authors = Author.objects.all()
     genres = Genre.objects.all()
     books = Book.objects.all()
-    
+
     zipped_data = zip(authors, books) # упаковываем модель авторов и модель книг в zip() для их совместного отображения в одной видимой таблице на странице index.html
     zipped_data_list = list(zipped_data) # преобразуем наш zip() в список для лучшего отображения в консоли
     print(zipped_data_list) # отображаем наш полученный список в консоли 
