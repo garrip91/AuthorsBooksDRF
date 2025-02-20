@@ -10,39 +10,40 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-from pathlib import Path
+from pathlib import Path # ИМПОРТ ДЛЯ ОПРЕДЕЛЕНИЯ ПУТИ К КОРНЮ ПРОЕКТА (где лежит точка входа manage.py)
 
-from . import secrets
+from . import secrets # ИМПОРТ ДЛЯ КОНФИДЕНЦИАЛЬНОЙ ИНФОРМАЦИИ В ПРОЕКТЕ
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent # САМО ОПРЕДЕЛЕНИЕ ПУТИ К КОРНЮ ПРОЕКТА (где лежит точка входа manage.py)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = secrets.SECRET_KEY
+SECRET_KEY = secrets.SECRET_KEY # ОБЕСПЕЧЕНИЕ БЕЗОПАСНОСТИ ВСЕГО ПРОЕКТА
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True # РЕЖИМ ОТЛАДКИ ПРОЕКТА, ПОЗВОЛЯЮЩИЙ ВИДЕТЬ ВСЕ ЛОГИ, ОШИБКИ, ПРОБЛЕМЫ И ТАК ДАЛЕЕ (по умолчанию через консоль, откуда запускается проект)...
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [] # СПИСОК С ДОПУСТИМЫМИ ХОСТАМИ: В ПРОДАКШН-СРЕДЕ ОБЫЧНО В ЭТОМ СПИСКЕ УКАЗЫВАЮТСЯ КОНКРЕТНЫЕ ДОМЕНЫ, НА КОТОРЫХ ПРОЕКТ РАБОТАЕТ (также куда он может посылать запросы и откуда - получать ответы на них)
 
 
 # Application definition
 
+# ВСЕ ПРИЛОЖЕНИЯ, КОТОРЫЕ РАБОТАЮТ В ПРОЕКТЕ:
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.admin', # ЭТО ВСТРОЕННОЕ ПРИЛОЖЕНИЕ ДЛЯ ТОГО, ЧТОБЫ ФРЕЙМВОРК АВТОМАТИЧЕСКИ ИСКАЛ МОДУЛЬ admin (файл admin.py) В КАЖДОМ ПРИЛОЖЕНИИ И ИМПОРТИРОВАЛ ЕГО
+    'django.contrib.auth', # ЭТО ВСТРОЕННОЕ ПРИЛОЖЕНИЕ ОТВЕЧАЕТ ЗА АУТЕНТИФИКАЦИЮ, А ТАКЖЕ ГАРАНТИРУЕТ, ЧТО 4 РАЗРЕШЕНИЯ, СУЩЕСТВУЮЩИЕ ПО УМОЛЧАНИЮ (create, read, update и delete), БУДУТ СОЗДАНЫ ДЛЯ КАЖДОЙ МОДЕЛИ ФРЕЙМВОРКА, ОПРЕДЕЛЁННОЙ ВО ВСЕХ УСТАНОВЛЕННЫХ ПРИЛОЖЕНИЯХ
+    'django.contrib.contenttypes', # ЭТО ВСТРОЕННОЕ ПРИЛОЖЕНИЕ ОТСЛЕЖИВАЕТ ВСЕ МОДЕЛИ, УСТАНОВЛЕННЫЕ В ПРОЕКТЕ НА БАЗЕ ФРЕЙМВОРКА, ПРЕДОСТАВЛЯЯ ВЫСОКОУРОВНЕВЫЙ ОБЩИЙ ИНТЕРФЕЙС ДЛЯ ВЗАИМОДЕЙСТВИЯ С НИМИ
+    'django.contrib.sessions', # ЭТО ВСТРОЕННОЕ ПРИЛОЖЕНИЕ ДЛЯ ИСПОЛЬЗОВАНИЯ СЕССИИ С ОПОРОЙ НА БД
+    'django.contrib.messages', # ЭТО ВСТРОЕННОЕ ПРИЛОЖЕНИЕ ОТВЕЧАЕТ ЗА ФУНКЦИОНАЛЬНОСТЬ ДЛЯ РАБОТЫ С ОДНОРАЗОВЫМИ СООБЩЕНИЯМИ (flash messages) (которые чаще всего применяются с такими методами как success(), info(), warning(), error() и debug()), ИСПОЛЬЗУЕМЫМИ ДЛЯ ПЕРЕДАЧИ ИНФОРМАЦИИ ПОЛЬЗОВАТЕЛЮ ПОСЛЕ ВЫПОЛНЕНИЯ ОПРЕДЕЛЁННЫХ ДЕЙСТВИЙ
+    'django.contrib.staticfiles', # ЭТО ВСТРОЕННОЕ ПРИЛОЖЕНИЕ ОТВЕЧАЕТ ЗА СБОР СТАТИЧЕСКИХ ФАЙЛОВ (.css, .js и т.д...) ИЗ КАЖДОГО ПРИЛОЖЕНИЯ
     
-    "AuthorsBooksDRFApp.apps.AuthorsbooksdrfappConfig",
-    "rest_framework",
+    "AuthorsBooksDRFApp.apps.AuthorsbooksdrfappConfig", # ЭТО "КАСТОМНОЕ" ПРИЛОЖЕНИЕ ДЛЯ ДОБАВЛЕНИЯ ПОЛЬЗОВАТЕЛЬСКИХ МОДЕЛЕЙ, ПРЕДСТАВЛЕНИЙ, ШАБЛОНОВ И Т.Д..., А ТАКЖЕ ДЛЯ ВЗАИМОДЕЙСТВИЯ С НИМИ 
+    "rest_framework", # ЭТО "ДОПОЛНИТЕЛЬНОЕ" ПРИЛОЖЕНИЕ (хоть оно и работает только с фреймворком Django), "ПОДТЯНУТОЕ" ИЗ СТОРОННЕЙ БИБЛИОТЕКИ (в данном случае djangorestframework==3.15.2) ДЛЯ ВЗАИМОДЕЙСТВИЯ С REST API
 ]
 
 #REST_FRAMEWORK = {
@@ -50,35 +51,37 @@ INSTALLED_APPS = [
 #    "PAGE_SIZE": 10
 #}
 
+# СИСТЕМА ХУКОВ ДЛЯ ОБРАБОТКИ ЗАПРОСОВ/ОТВЕТОВ ВО ФРЕЙМВОРКЕ:
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware', # ЭТО ВСТРОЕННОЕ ПО, КОТОРОЕ ОТВЕЧАЕТ ЗА УЛУЧШЕНИЕ БЕЗОПАСНОСТИ ПРОЕКТА
+    'django.contrib.sessions.middleware.SessionMiddleware', # ЭТО ВСТРОЕННОЕ ПО, КОТОРОЕ ОТВЕЧАЕТ ЗА УПРАВЛЕНИЕ СЕССИЯМИ ПОЛЬЗОВАТЕЛЕЙ
+    'django.middleware.common.CommonMiddleware', # ЭТО ВСТРОЕННОЕ ПО, КОТОРОЕ ОТВЕЧАЕТ ЗА ОБРАБОТКУ HTTP-ЗАПРОСОВ И ОТВЕТОВ НА НИХ
+    'django.middleware.csrf.CsrfViewMiddleware', # ЭТО ВСТРОЕННОЕ ПО, КОТОРОЕ ОТВЕЧАЕТ ЗА ЗАЩИТУ ОТ АТАК ТИПА CSRF (Cross-Site Request Forgery), МЕЖСАЙТОВЫХ ПОДДЕЛОК ЗАПРОСОВ И Т.Д...
+    'django.contrib.auth.middleware.AuthenticationMiddleware', # ЭТО ВСТРОЕННОЕ ПО, КОТОРОЕ ОТВЕЧАЕТ ЗА АУТЕНТИФИКАЦИЮ ПОЛЬЗОВАТЕЛЕЙ (ОНО СВЯЗЫВАЕТ КАЖДОГО ПОЛЬЗОВАТЕЛЯ С ЕГО СЕССИЕЙ И ПРЕДОСТАВЛЯЕТ ДОСТУП К ИНФОРМАЦИИ О ТЕКУЩЕМ ПОЛЬЗОВАТЕЛЕ В КАЖДОМ ЗАПРОСЕ)
+    'django.contrib.messages.middleware.MessageMiddleware', # ЭТО ВСТРОЕННОЕ ПО ОТВЕЧАЕТ ЗА ОБРАБОТКУ ЗАПРОСОВ/ОТВЕТОВ ДЛЯ РАБОТЫ С ОДНОРАЗОВЫМИ СООБЩЕНИЯМИ (flash messages) (которые чаще всего применяются с такими методами как success(), info(), warning(), error() и debug()), ИСПОЛЬЗУЕМЫМИ ДЛЯ ПЕРЕДАЧИ ИНФОРМАЦИИ ПОЛЬЗОВАТЕЛЮ ПОСЛЕ ВЫПОЛНЕНИЯ ОПРЕДЕЛЁННЫХ ДЕЙСТВИЙ
+    'django.middleware.clickjacking.XFrameOptionsMiddleware', # ЭТО ВСТРОЕННОЕ ПО ОТВЕЧАЕТ ЗА ЗАЩИТУ ОТ АТАК ТИПА clickjacking, CSRF И Т.Д...
 ]
 
-ROOT_URLCONF = 'AuthorsBooksDRFProject.urls'
+ROOT_URLCONF = 'AuthorsBooksDRFProject.urls' # ЭТО НАСТРОЙКА, КОТОРАЯ УКАЗЫВАЕТ НА ГЛАВНЫЙ ФАЙЛ С URL-АДРЕСАМИ (МАРШРУТАМИ) ПРОЕКТА
 
+# КОНФИГУРАЦИЯ ШАБЛОНОВ ПРОЕКТА, ИСПОЛЬЗУЕМЫХ ДЛЯ ГЕНЕРАЦИИ HTML-СТРАНИЦ И ДРУГИХ ТЕКСТОВЫХ ФАЙЛОВ:
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],
-        'APP_DIRS': True,
+        'BACKEND': 'django.template.backends.django.DjangoTemplates', # ЭТА НАСТРОЙКА ВКЛЮЧАЕТ ВСТРОЕННЫЙ ШАБЛОНИЗАТОР ФРЕЙМВОРКА
+        'DIRS': [BASE_DIR / "templates"], # ЭТА НАСТРОЙКА ОТВЕЧАЕТ ЗА УКАЗАНИЕ ПАПКИ, В КОТОРОЙ ФРЕЙМВОРК БУДЕТ ИСКАТЬ ФАЙЛЫ ШАБЛОНОВ
+        'APP_DIRS': True, # ЭТА НАСТРОЙКА ОТВЕЧАЕТ ЗА ПОИСК ШАБЛОНОВ В ПАПКАХ templates ВНУТРИ ПРИЛОЖЕНИЙ
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.debug', # ЭТА НАСТРОЙКА (КОНТЕКСТНЫЙ ПРОЦЕССОР) ДОБАВЛЯЕТ ОТЛАДОЧНУЮ ИНФОРМАЦИЮ В КОНТЕКСТ ШАБЛОНОВ
+                'django.template.context_processors.request', # ЭТА НАСТРОЙКА (КОНТЕКСТНЫЙ ПРОЦЕССОР) ДОБАВЛЯЕТ ОБЪЕКТ ЗАПРОСА (request) В КОНТЕКСТ ШАБЛОНОВ
+                'django.contrib.auth.context_processors.auth', # ЭТА НАСТРОЙКА (КОНТЕКСТНЫЙ ПРОЦЕССОР) ДОБАВЛЯЕТ ИНФОРМАЦИЮ О ТЕКУЩЕМ ПОЛЬЗОВАТЕЛЕ В КОНТЕКСТ ШАБЛОНОВ
+                'django.contrib.messages.context_processors.messages', # ЭТА НАСТРОЙКА (КОНТЕКСТНЫЙ ПРОЦЕССОР) ДОБАВЛЯЕТ ОДНОРАЗОВЫЕ СООБЩЕНИЯ (flash messages) (которые чаще всего применяются с такими методами как success(), info(), warning(), error() и debug()) В КОНТЕКСТ ШАБЛОНОВ
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'AuthorsBooksDRFProject.wsgi.application'
+WSGI_APPLICATION = 'AuthorsBooksDRFProject.wsgi.application' # ЭТА НАСТРОЙКА УКАЗЫВАЕТ НА ТОЧКУ ВХОДА ДЛЯ WSGI-СЕРВЕРА
 
 
 # Database
@@ -90,14 +93,15 @@ WSGI_APPLICATION = 'AuthorsBooksDRFProject.wsgi.application'
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 } """
+# НАСТРОЙКИ БАЗЫ ДАННЫХ НА СЕРВЕРЕ БАЗЫ ДАННЫХ (в данном случае сервер базы данных локальный и это PostgreSQL):
 DATABASES = {
     "default": {
-        "ENGINE": secrets.DATABASES["default"]["ENGINE"],
-        "NAME": secrets.DATABASES["default"]["NAME"],
-        "USER": secrets.DATABASES["default"]["USER"],
-        "PASSWORD": secrets.DATABASES["default"]["PASSWORD"],
-        "HOST": secrets.DATABASES["default"]["HOST"],
-        "PORT": secrets.DATABASES["default"]["PORT"],
+        "ENGINE": secrets.DATABASES["default"]["ENGINE"], # ЭТА НАСТРОЙКА ОТВЕЧАЕТ ЗА ВЫБОР ДВИЖКА БАЗЫ ДАННЫХ, КОТОРЫЙ БУДЕТ ИСПОЛЬЗОВАТЬСЯ ДЛЯ ВЗАИМОДЕЙСТВИЯ С БАЗОЙ ДАННЫХ
+        "NAME": secrets.DATABASES["default"]["NAME"], # ЭТА НАСТРОЙКА ОТВЕЧАЕТ ЗА УКАЗАНИЕ ИМЕНИ БАЗЫ ДАННЫХ, К КОТОРОЙ БУДЕТ ПОДКЛЮЧАТЬСЯ ПРОЕКТ
+        "USER": secrets.DATABASES["default"]["USER"], # ЭТА НАСТРОЙКА ОТВЕЧАЕТ ЗА УКАЗАНИЕ ИМЕНИ ПОЛЬЗОВАТЕЛЯ, КОТОРОЕ ИСПОЛЬЗУЕТСЯ ДЛЯ ПОДКЛЮЧЕНИЯ К БАЗЕ ДАННЫХ
+        "PASSWORD": secrets.DATABASES["default"]["PASSWORD"], # ЭТА НАСТРОЙКА ОТВЕЧАЕТ ЗА УКАЗАНИЕ ПАРОЛЯ, КОТОРЫЙ ИСПОЛЬЗУЕТСЯ ДЛЯ ПОДКЛЮЧЕНИЯ К БАЗЕ ДАННЫХ
+        "HOST": secrets.DATABASES["default"]["HOST"], # ЭТА НАСТРОЙКА ОТВЕЧАЕТ ЗА УКАЗАНИЕ АДРЕСА СЕРВЕРА БАЗЫ ДАННЫХ, К КОТОРОМУ БУДЕТ ПОДКЛЮЧАТЬСЯ ПРОЕКТ
+        "PORT": secrets.DATABASES["default"]["PORT"], # ЭТА НАСТРОЙКА ОТВЕЧАЕТ ЗА УКАЗАНИЕ ПОРТА, ЧЕРЕЗ КОТОРЫЙ ФРЕЙМВОРК БУДЕТ ПОДКЛЮЧАТЬСЯ К СЕРВЕРУ БАЗЫ ДАННЫХ
     }
 }
 
@@ -105,18 +109,19 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
+# ПРОВЕРКА СЛОЖНОСТИ ПАРОЛЕЙ, КОТОРЫЕ ПОЛЬЗОВАТЕЛИ ИСПОЛЬЗУЮТ ПРИ СВОИХ РЕГИСТРАЦИЯХ ИЛИ СМЕНАХ ПАРОЛЕЙ:
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', # ЭТА НАСТРОЙКА ОТВЕЧАЕТ ЗА ПРОВЕРКУ ПАРОЛЯ ПОЛЬЗОВАТЕЛЯ НА СХОЖЕСТИ С АТРИБУТАМИ
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', # ЭТА НАСТРОЙКА ОТВЕЧАЕТ ЗА ПРОВЕРКУ МИНИМАЛЬНОЙ ДЛИНЫ ПАРОЛЯ ПОЛЬЗОВАТЕЛЯ
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator', # ЭТА НАСТРОЙКА ОТВЕЧАЕТ ЗА ПРОВЕРКУ ПАРОЛЯ ПОЛЬЗОВАТЕЛЯ НА ПРИНАДЛЕЖНОСТЬ К СПИСКАМ ЧАСТО ИСПОЛЬЗУЕМЫХ ПАРОЛЕЙ
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', # ЭТА НАСТРОЙКА ОТВЕЧАЕТ ЗА ПРОВЕРКУ ПАРОЛЯ НА ТО, ЧТО ОН СОСТОИТ ТОЛЬКО ИЗ ЦИФР, А ТАКЖЕ ПОМОГАЕТ ПРЕДОТВРАТИТЬ ИСПОЛЬЗОВАНИЕ ПОЛЬЗОВАТЕЛЕМ СЛИШКОМ ПРОСТОГО И НЕНАДЁЖНОГО ПАРОЛЯ
     },
 ]
 
@@ -124,21 +129,21 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'ru-RU'
+LANGUAGE_CODE = 'ru-RU' # ЭТА НАСТРОЙКА ОТВЕЧАЕТ ЗА УСТАНОВКУ ЯЗЫКА ПО УМОЛЧАНИЮ ДЛЯ ВСЕГО ПРОЕКТА
 
-TIME_ZONE = 'Europe/Moscow'
+TIME_ZONE = 'Europe/Moscow' # ЭТА НАСТРОЙКА ОТВЕЧАЕТ ЗА УСТАНОВКУ ВРЕМЕННОЙ ЗОНЫ (ЧАСОВОГО ПОЯСА) ПО УМОЛЧАНИЮ ДЛЯ ПРОЕКТА
 
-USE_I18N = True
+USE_I18N = True # ЭТА НАСТРОЙКА ОТВЕЧАЕТ ЗА ВКЛЮЧЕНИЕ ПОДДЕРЖКИ ИНТЕРНАЦИОНАЛИЗАЦИИ И АДАПТАЦИИ ПРОЕКТА К РАЗНЫМ РЕГИОНАМ И ЯЗЫКАМ (настройка мультиязычности)
 
-USE_TZ = True
+USE_TZ = True # ЭТА НАСТРОЙКА ОТВЕЧАЕТ ЗА ВКЛЮЧЕНИЕ/ОТКЛЮЧЕНИЕ ПОДДЕРЖКИ ВРЕМЕННЫХ ЗОН В ПРОЕКТЕ
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'static/' # ЭТА НАСТРОЙКА УКАЗЫВАЕТ ФРЕЙМВОРКУ НА ТО, ПО КАКОМУ АДРЕСУ БУДУТ ДОСТУПНЫ СТАТИЧЕСКИЕ ФАЙЛЫ ПРОЕКТА
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField' # ЭТА НАСТРОЙКА ОТВЕЧАЕТ ЗА ТИП ПОЛЯ ПО УМОЛЧАНИЮ ДЛЯ АВТОМАТИЧЕСКИ СОЗДАВАЕМОГО ПЕРВИЧНОГО КЛЮЧА (Primary Key) В МОДЕЛИ
